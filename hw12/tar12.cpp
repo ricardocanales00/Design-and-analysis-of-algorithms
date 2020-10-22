@@ -1,3 +1,10 @@
+/*
+RICARDO LÓPEZ CANALES
+A01422699
+*/
+
+
+
 #include <iostream>
 #include <queue>
 #include <utility>
@@ -7,13 +14,13 @@ using namespace std;
 
 #define INF INT_MAX
 #define Edge pair<int, int>
-#define Graph vector<vector<Edge>>
-#define Vertex pair<int, int>  // Distance from source, vertex ID
+#define Graph vector<vector<Edge> >
+#define Vertex pair<int,int>  // Distance from source, vertex ID
 
 vector<int> Dijkstra(Graph& G, int source)
 {
     vector<int> Dist;
-    priority_queue<Vertex, vector<Vertex>, greater<Vertex>> queue;
+    priority_queue<Vertex, vector<Vertex>, greater<Vertex > > queue;
 
     Dist.assign(G.size(), INF);
     Dist[source] = 0;
@@ -48,46 +55,47 @@ vector<int> Dijkstra(Graph& G, int source)
 
 int main()
 {
-    int nodes, edges, source, u, v, w;
-    Graph G;
+    int n, nodes, edges, source, w;
+    char u, v; vector<char> resp;
 
-    // Read from stdin
-    cin >> nodes >> edges >> source;
-    G.resize(nodes);
+    cin >> n;
 
-    for (int i = 0; i < edges; i++)
-    {
-        cin >> u >> v >> w;
+    for (int x = 0; x < n; ++x){
+        Graph G(nodes);
+        cin >> nodes >> edges;
+        source = 0;
 
-        // Edge from u->v
-        Edge edge1(v-1, w);
-        G[u-1].push_back(edge1);
-
-        // Edge from v->u
-        Edge edge2(u-1, w);
-        G[v-1].push_back(edge2);
-    }
-
-    // We run our algorithm
-    vector<int> distances = Dijkstra(G, source-1);
-
-    cout << "Minumum distances: " << endl;
-    for (int i = 0; i < nodes; i++)
-    {
-        if (i != source-1)
+        for (int i = 0; i < edges; i++)
         {
-            cout << source << " -> " << i+1 << " : ";
-            if (distances[i] == INF)
-            {
-                cout << "INFINITY" << endl;
-            }
-            else
-            {
-                cout << distances[i] << endl;
-            }
+            cin >> u >> v >> w;
+            // Edge from u->v
+            Edge edge1(v-'A', w);
+            G[u-'A'].push_back(edge1);
+
+            // Edge from v->u
+            Edge edge2(u-'A', w);
+            G[v-'A'].push_back(edge2);
         }
+
+        // We run our algorithm
+        vector<int> distances = Dijkstra(G, source);
+
+        int mayor = 0;
+
+        for (int i = 0; i < nodes; ++i)
+        {
+            if(distances[i]> distances[mayor])
+                mayor = i;
+        }
+
+        resp.push_back(mayor);
     }
 
+    for (int i = 0; i < resp.size(); ++i)
+    {
+        char salida = 'A'+ resp[i];
+        cout << "Case" << i +1 <<": "<< salida<<endl;
+    }
     return 0;
 }
 
@@ -101,4 +109,22 @@ int main()
 3 4 6
 3 5 3
 4 5 7
+
+2
+5 7
+A B 5
+A C 4
+A D 7
+B E 3
+C D 2
+C E 4
+D E 1
+4 6
+A B 1
+A C 1
+A D 1
+B C 1
+B D 1
+C D 1
 */
+
